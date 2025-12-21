@@ -16,7 +16,7 @@ import 'package:geolocator/geolocator.dart';
 // ==========================================
 // ⚠️ ANDROID EMULATOR: Use 'http://localhost:4000' (Run 'adb reverse tcp:4000 tcp:4000')
 // ⚠️ REAL PHONE: Use your PC IP (e.g., 'http://192.168.1.5:4000')
-final String backendUrl = 'http://localhost:4000';
+final String backendUrl = 'https://smart-attendance-system-zrwj.onrender.com';
 
 // BLE UUID (Must match on both Faculty & Student)
 final String SERVICE_UUID = "bf27730d-860a-4e09-889c-2d8b6a9e0fe7";

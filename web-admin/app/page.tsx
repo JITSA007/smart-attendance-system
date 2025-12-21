@@ -58,10 +58,10 @@ export default function AdminPortal() {
     setLoading(true);
     try {
       const [resUsers, resTime, resMeta, resStats] = await Promise.all([
-        fetch('http://localhost:4000/users'),
-        fetch('http://localhost:4000/timetable'),
-        fetch('http://localhost:4000/metadata'),
-        fetch('http://localhost:4000/admin/stats')
+        fetch('https://smart-attendance-system-pied.vercel.app//users'),
+        fetch('https://smart-attendance-system-pied.vercel.app//timetable'),
+        fetch('https://smart-attendance-system-pied.vercel.app//metadata'),
+        fetch('https://smart-attendance-system-pied.vercel.app//admin/stats')
       ]);
 
       if (resUsers.ok) setUsers(await resUsers.json());
@@ -79,7 +79,7 @@ export default function AdminPortal() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:4000/admin/login', {
+      const res = await fetch('https://smart-attendance-system-pied.vercel.app//admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(loginForm)
@@ -98,7 +98,7 @@ export default function AdminPortal() {
 
   // --- USER ACTIONS ---
   const approveUser = async (id: any) => {
-    await fetch('http://localhost:4000/approve-user', {
+    await fetch('https://smart-attendance-system-pied.vercel.app//approve-user', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ user_id: id })
@@ -108,7 +108,7 @@ export default function AdminPortal() {
 
   const saveUserEdit = async () => {
     if (!editingUser) return;
-    await fetch(`http://localhost:4000/users/${editingUser.id}`, {
+    await fetch(`https://smart-attendance-system-pied.vercel.app//users/${editingUser.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(editingUser)
@@ -123,7 +123,7 @@ export default function AdminPortal() {
       alert("Please select Faculty, Subject and Batch.");
       return;
     }
-    await fetch('http://localhost:4000/timetable/assign', {
+    await fetch('https://smart-attendance-system-pied.vercel.app//timetable/assign', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -143,7 +143,7 @@ export default function AdminPortal() {
   // --- CURRICULUM ACTIONS ---
   const addSimpleItem = async (type: string, name: string, setFn: Function) => {
     if (!name) return alert("Name is required");
-    await fetch('http://localhost:4000/metadata/add', {
+    await fetch('https://smart-attendance-system-pied.vercel.app//metadata/add', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ type, name })
@@ -156,7 +156,7 @@ export default function AdminPortal() {
     if (!subForm.name || !subForm.code || !subForm.program || !subForm.semester) {
       return alert("All fields are required for a Subject");
     }
-    await fetch('http://localhost:4000/metadata/add-subject', {
+    await fetch('https://smart-attendance-system-pied.vercel.app//metadata/add-subject', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -172,7 +172,7 @@ export default function AdminPortal() {
 
   const deleteMetadata = async (type: string, id: any) => {
     if (!confirm("Are you sure? This might break linked data!")) return;
-    await fetch('http://localhost:4000/metadata/delete', {
+    await fetch('https://smart-attendance-system-pied.vercel.app//metadata/delete', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ type, id })
@@ -182,7 +182,7 @@ export default function AdminPortal() {
 
   const saveSubjectEdit = async () => {
     if (!editingSubject) return;
-    await fetch(`http://localhost:4000/metadata/subjects/${editingSubject.id}`, {
+    await fetch(`https://smart-attendance-system-pied.vercel.app//metadata/subjects/${editingSubject.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(editingSubject)
@@ -198,7 +198,7 @@ export default function AdminPortal() {
     const effectiveThreshold = showAllStudents ? 101 : defaulterParams.threshold;
     
     try {
-      const res = await fetch(`http://localhost:4000/admin/defaulters?batch=${defaulterParams.batch}&threshold=${effectiveThreshold}`);
+      const res = await fetch(`https://smart-attendance-system-pied.vercel.app//admin/defaulters?batch=${defaulterParams.batch}&threshold=${effectiveThreshold}`);
       const data = await res.json();
       setDefaulterList(data);
     } catch (e) {
@@ -209,7 +209,7 @@ export default function AdminPortal() {
 
   // --- EXPORT ---
   const downloadReport = () => {
-    window.location.href = `http://localhost:4000/admin/export?batch=${exportData.batch}&month=${exportData.month}`;
+    window.location.href = `https://smart-attendance-system-pied.vercel.app//admin/export?batch=${exportData.batch}&month=${exportData.month}`;
   };
 
 

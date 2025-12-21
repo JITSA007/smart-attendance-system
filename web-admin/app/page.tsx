@@ -182,7 +182,7 @@ export default function AdminPortal() {
 
   const saveSubjectEdit = async () => {
     if (!editingSubject) return;
-    await fetch(`https://smart-attendance-system-pied.vercel.app//metadata/subjects/${editingSubject.id}`, {
+    await fetch(`https://smart-attendance-system-zrwj.onrender.com/metadata/subjects/${editingSubject.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(editingSubject)

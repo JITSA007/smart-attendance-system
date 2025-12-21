@@ -8,6 +8,10 @@ import {
   Search, Filter
 } from 'lucide-react';
 
+// ✅ CENTRALIZED BACKEND URL (Easy to change later)
+// Note: No trailing slash at the end
+const BACKEND_URL = "https://smart-attendance-system-zrwj.onrender.com";
+
 export default function AdminPortal() {
   // ==========================================
   // 1. STATE MANAGEMENT
@@ -47,7 +51,7 @@ export default function AdminPortal() {
   const [defaulterList, setDefaulterList] = useState<any[]>([]);
   const [defaulterParams, setDefaulterParams] = useState({ batch: '2025', threshold: 75 });
   const [loadingDefaulters, setLoadingDefaulters] = useState(false);
-  const [showAllStudents, setShowAllStudents] = useState(false); // New Toggle
+  const [showAllStudents, setShowAllStudents] = useState(false); 
 
   // ==========================================
   // 2. API ACTIONS
@@ -57,11 +61,12 @@ export default function AdminPortal() {
   const fetchAllData = async () => {
     setLoading(true);
     try {
+      // ✅ All calls now use BACKEND_URL
       const [resUsers, resTime, resMeta, resStats] = await Promise.all([
-        fetch('https://smart-attendance-system-pied.vercel.app//users'),
-        fetch('https://smart-attendance-system-pied.vercel.app//timetable'),
-        fetch('https://smart-attendance-system-pied.vercel.app//metadata'),
-        fetch('https://smart-attendance-system-pied.vercel.app//admin/stats')
+        fetch(`${BACKEND_URL}/users`),
+        fetch(`${BACKEND_URL}/timetable`),
+        fetch(`${BACKEND_URL}/metadata`),
+        fetch(`${BACKEND_URL}/admin/stats`)
       ]);
 
       if (resUsers.ok) setUsers(await resUsers.json());
@@ -79,7 +84,7 @@ export default function AdminPortal() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('https://smart-attendance-system-pied.vercel.app//admin/login', {
+      const res = await fetch(`${BACKEND_URL}/admin/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(loginForm)
@@ -98,7 +103,7 @@ export default function AdminPortal() {
 
   // --- USER ACTIONS ---
   const approveUser = async (id: any) => {
-    await fetch('https://smart-attendance-system-pied.vercel.app//approve-user', {
+    await fetch(`${BACKEND_URL}/approve-user`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ user_id: id })
@@ -108,7 +113,7 @@ export default function AdminPortal() {
 
   const saveUserEdit = async () => {
     if (!editingUser) return;
-    await fetch(`https://smart-attendance-system-pied.vercel.app//users/${editingUser.id}`, {
+    await fetch(`${BACKEND_URL}/users/${editingUser.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(editingUser)
@@ -123,7 +128,7 @@ export default function AdminPortal() {
       alert("Please select Faculty, Subject and Batch.");
       return;
     }
-    await fetch('https://smart-attendance-system-pied.vercel.app//timetable/assign', {
+    await fetch(`${BACKEND_URL}/timetable/assign`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -143,7 +148,7 @@ export default function AdminPortal() {
   // --- CURRICULUM ACTIONS ---
   const addSimpleItem = async (type: string, name: string, setFn: Function) => {
     if (!name) return alert("Name is required");
-    await fetch('https://smart-attendance-system-pied.vercel.app//metadata/add', {
+    await fetch(`${BACKEND_URL}/metadata/add`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ type, name })
@@ -156,7 +161,7 @@ export default function AdminPortal() {
     if (!subForm.name || !subForm.code || !subForm.program || !subForm.semester) {
       return alert("All fields are required for a Subject");
     }
-    await fetch('https://smart-attendance-system-pied.vercel.app//metadata/add-subject', {
+    await fetch(`${BACKEND_URL}/metadata/add-subject`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -172,7 +177,7 @@ export default function AdminPortal() {
 
   const deleteMetadata = async (type: string, id: any) => {
     if (!confirm("Are you sure? This might break linked data!")) return;
-    await fetch('https://smart-attendance-system-pied.vercel.app//metadata/delete', {
+    await fetch(`${BACKEND_URL}/metadata/delete`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ type, id })
@@ -182,7 +187,7 @@ export default function AdminPortal() {
 
   const saveSubjectEdit = async () => {
     if (!editingSubject) return;
-    await fetch(`https://smart-attendance-system-zrwj.onrender.com/metadata/subjects/${editingSubject.id}`, {
+    await fetch(`${BACKEND_URL}/metadata/subjects/${editingSubject.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(editingSubject)
@@ -194,11 +199,10 @@ export default function AdminPortal() {
   // --- DEFAULTER ACTIONS ---
   const fetchDefaulters = async () => {
     setLoadingDefaulters(true);
-    // Logic Hack: If "Show All" is checked, we ask for threshold 101% so everyone is included
     const effectiveThreshold = showAllStudents ? 101 : defaulterParams.threshold;
     
     try {
-      const res = await fetch(`https://smart-attendance-system-pied.vercel.app//admin/defaulters?batch=${defaulterParams.batch}&threshold=${effectiveThreshold}`);
+      const res = await fetch(`${BACKEND_URL}/admin/defaulters?batch=${defaulterParams.batch}&threshold=${effectiveThreshold}`);
       const data = await res.json();
       setDefaulterList(data);
     } catch (e) {
@@ -209,7 +213,7 @@ export default function AdminPortal() {
 
   // --- EXPORT ---
   const downloadReport = () => {
-    window.location.href = `https://smart-attendance-system-pied.vercel.app//admin/export?batch=${exportData.batch}&month=${exportData.month}`;
+    window.location.href = `${BACKEND_URL}/admin/export?batch=${exportData.batch}&month=${exportData.month}`;
   };
 
 

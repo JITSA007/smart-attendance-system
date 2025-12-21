@@ -5,8 +5,22 @@ const { createClient } = require('@supabase/supabase-js');
 
 // CONFIGURATION
 const app = express();
-app.use(cors());
-app.use(express.json({ limit: '10mb' })); // Increased limit for file uploads
+// ==========================================
+// 1. CONFIGURATION & CORS (THE FIX)
+// ==========================================
+const app = express();
+
+// Allow Vercel, Localhost, Mobile App - EVERYTHING
+app.use(cors({
+  origin: '*', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // <--- Added OPTIONS
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// Force-Handle Preflight Requests (The 405 Killer)
+app.options('*', cors()); 
+
+app.use(express.json({ limit: '10mb' }));
 
 // SUPABASE CONNECTION
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);

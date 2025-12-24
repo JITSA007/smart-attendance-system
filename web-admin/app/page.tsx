@@ -37,7 +37,7 @@ export default function AdminPortal() {
   const [ttForm, setTtForm] = useState({ 
     day: 'Monday', faculty: '', subject: '', batch: '', start: '09:00', end: '10:00', room: '101' 
   });
-  
+  <title>Smart Attendance System By Jitendra Prajapat</title>
   // Curriculum Forms
   const [progInput, setProgInput] = useState("");
   const [batchInput, setBatchInput] = useState("");

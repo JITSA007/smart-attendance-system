@@ -36,6 +36,18 @@ A robust, full-stack attendance solution designed to eliminate proxy attendance 
 | **Infrastructure** | Docker | `Redis` (Caching), `Supabase` (Hosted DB) |
 
 ---
+## 👨‍💻 About the Developer
+
+**Jitendra Prajapat** *Assistant Professor, School of Engineering and Technology* *Ph.D. Scholar, Computer Science*
+
+I am an academic and researcher with a focus on bridging the gap between theoretical computer science and practical, real-world applications. My research interests include **Robotics Process Automation (RPA)**, **Cyber Security**, and **AI/ML**, specifically applying these technologies to solve institutional challenges.
+
+This project represents my commitment to building secure, scalable, and intelligent systems for the educational sector.
+
+* **Research Focus:** AI/ML in Security, RPA, and Web Technologies.
+* **Location:** Jaipur, Rajasthan, India.
+
+---
 
 ## 🏗 Architecture
 
@@ -61,16 +73,3 @@ smart-attendance-monorepo/
 │   ├── database/            # Prisma Schema & Migrations
 │   └── shared-types/        # TypeScript Interfaces
 └── docker-compose.yml       # DB setup
-
-## 👨‍💻 About the Developer
-
-**Jitendra Prajapat** *Assistant Professor, School of Engineering and Technology* *Ph.D. Scholar, Computer Science*
-
-I am an academic and researcher with a focus on bridging the gap between theoretical computer science and practical, real-world applications. My research interests include **Robotics Process Automation (RPA)**, **Cyber Security**, and **AI/ML**, specifically applying these technologies to solve institutional challenges.
-
-This project represents my commitment to building secure, scalable, and intelligent systems for the educational sector.
-
-* **Research Focus:** AI/ML in Security, RPA, and Web Technologies.
-* **Location:** Jaipur, Rajasthan, India.
-
----
